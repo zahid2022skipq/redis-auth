@@ -19,7 +19,7 @@ const RedisStore = connectRedis(session);
 const sessionConfig = {
   store: new RedisStore({ client: redisClient }),
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   secret: process.env.SESSION_SECRET,
   cookie: {
     secure: false,
