@@ -4,7 +4,7 @@ console.log("Connecting...");
 module.exports = () => {
   const url = `${process.env.MONGODB_CONNECTION}/${process.env.MONGODB_DATABASE}`;
   return mongoose
-    .connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+    .connect(url, () => {
       console.log("Connected to MongoDB");
     })
     .catch((e) => {
