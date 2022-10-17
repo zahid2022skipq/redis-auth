@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
   const existingUser = User.findOne({ username });
 
   if (existingUser) {
-    res.status(400).json({ message: "User already exists" });
+    return res.status(400).json({ message: "User already exists" });
   }
 
   try {
@@ -20,7 +20,7 @@ router.post("/register", async (req, res) => {
     }).save();
     req.session.user = newUser;
     delete newUser.password;
-    res.status(200).json({ newUser, message: "Success" });
+    return res.status(200).json({ newUser, message: "Success" });
   } catch (error) {
     res.status(400).json({
       message: error.message,
