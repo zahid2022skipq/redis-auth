@@ -8,7 +8,7 @@ let tempDb = [];
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   console.log(username, password);
-  const existingUser = User.findOne({ username });
+  const existingUser = await User.findOne({ username });
   // console.log("EXISTING USER\n", existingUser, "\n\n********\n\n");
   if (existingUser) {
     return res.status(400).json({ message: "User already exists" });
