@@ -1,4 +1,5 @@
 var express = require("express");
+
 const User = require("../models/UserDb");
 var router = express.Router();
 
@@ -7,7 +8,7 @@ let tempDb = [];
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
-  const existingUser = User.findOne({ username });
+  const existingUser = await User.findOne({ username });
 
   if (existingUser) {
     return res.status(400).json({ message: "User already exists" });
