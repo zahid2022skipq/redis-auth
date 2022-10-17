@@ -1,18 +1,17 @@
 const express = require("express");
 const path = require("path");
+const config = require("dotenv").config();
+require("./connectDb");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
 const { createClient } = require("redis");
 const connectRedis = require("connect-redis");
 
-require("./connectDb");
-
 const redisClient = createClient({ legacyMode: true });
 redisClient
   .connect()
   .catch((e) => console.log("cannot connect to the client" + e));
-const config = require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
