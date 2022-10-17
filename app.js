@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const config = require("dotenv").config();
-require("./connectDb");
+require("./connectDb")();
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");

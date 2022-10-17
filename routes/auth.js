@@ -1,6 +1,6 @@
 var express = require("express");
 
-const User = require("../models/UserDb");
+const User = require("../models/User");
 var router = express.Router();
 
 let tempDb = [];
@@ -8,8 +8,8 @@ let tempDb = [];
 router.post("/register", async (req, res) => {
   const { username, password } = req.body;
   console.log(username, password);
-  const existingUser = await User.findOne({ username });
-  console.log(existingUser);
+  const existingUser = User.findOne({ username });
+  // console.log("EXISTING USER\n", existingUser, "\n\n********\n\n");
   if (existingUser) {
     return res.status(400).json({ message: "User already exists" });
   }
