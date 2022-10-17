@@ -1,7 +1,7 @@
-var express = require("express");
-
+const express = require("express");
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
-var router = express.Router();
+const router = express.Router();
 
 let tempDb = [];
 
@@ -31,16 +31,16 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", function (req, res, next) {
+router.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
 
-  const existingUser = tempDb.find((user) => user.username === username);
+  const existingUser = await User.findOne({ username });
 
   if (!existingUser) {
     return res.status(404).json({ message: "User doesn't exist" });
   }
-
-  if (existingUser.password !== password) {
+  const pass = bcrypt.compare(password, existingUser.password);
+  if (!pass) {
     return res.status(400).json({ message: "Password is incorrect!" });
   }
 
