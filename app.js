@@ -6,6 +6,8 @@ const session = require("express-session");
 const { createClient } = require("redis");
 const connectRedis = require("connect-redis");
 
+require("./connectDb");
+
 const redisClient = createClient({ legacyMode: true });
 redisClient
   .connect()
