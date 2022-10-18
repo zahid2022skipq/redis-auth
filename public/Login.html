@@ -91,7 +91,7 @@
         const resp = await fetch("/auth/login", options);
         const body = await resp.json();
         if (body?.user) {
-          window.location.href("/");
+          window.location.href = "/";
         }
       } catch (error) {
         alert(error.message);
