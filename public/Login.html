@@ -74,37 +74,40 @@
         </p>
       </div>
     </div>
-  </body>
-  <script>
-    const onFormSubmit = async ({ username, password }) => {
-      // form submit code here
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({ username, password }),
+    <script>
+      const onFormSubmit = async ({ username, password }) => {
+        // form submit code here
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        };
+
+        try {
+          const resp = await fetch("/auth/login", options);
+          const body = await resp.json();
+          if (resp.status !== 200) {
+            return alert(body.message);
+          }
+          if (body?.user) {
+            window.location.href = "/";
+          }
+        } catch (error) {
+          alert(error.message);
+        }
       };
 
-      try {
-        const resp = await fetch("/auth/login", options);
-        const body = await resp.json();
-        if (body?.user) {
-          window.location.href = "/";
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    };
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const username = form.elements["username"].value;
+        const password = form.elements["password"].value;
 
-    document.getElementById("loginForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const username = form.elements["username"].value;
-      const password = form.elements["password"].value;
-
-      onFormSubmit({ username, password });
-    });
-  </script>
+        onFormSubmit({ username, password });
+      });
+    </script>
+  </body>
 </html>

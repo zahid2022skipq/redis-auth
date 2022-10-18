@@ -47,4 +47,14 @@ router.post("/login", async (req, res, next) => {
   return res.status(200).json({ message: "Login Success", user });
 });
 
+router.get("/logout", async (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(400).json({ message: err.message });
+    }
+
+    return res.redirect("/");
+  });
+});
+
 module.exports = router;

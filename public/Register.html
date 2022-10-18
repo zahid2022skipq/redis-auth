@@ -20,7 +20,7 @@
           <div class="relative mb-8">
             <input
               id="username"
-              name="email"
+              name="username"
               type="text"
               class="w-full h-10 text-gray-900 placeholder-transparent border-b-2 border-gray-300 peer focus:outline-none focus:border-purple-600"
               placeholder="john@doe.com"
@@ -72,10 +72,43 @@
         </p>
       </div>
     </div>
+
+    <script>
+      const onFormSubmit = async ({ username, password }) => {
+        // form submit code here
+        const options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        };
+
+        try {
+          const resp = await fetch("/auth/register", options);
+          const body = await resp.json();
+          if (resp.status !== 200) {
+            return alert(body.message);
+          }
+          if (body?.user) {
+            window.location.href = "/";
+          }
+        } catch (error) {
+          alert(error.message);
+        }
+      };
+
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const form = e.target;
+          const username = form.elements["username"].value;
+          const password = form.elements["password"].value;
+
+          onFormSubmit({ username, password });
+        });
+    </script>
   </body>
-  <script>
-    const onFormSubmit = async () => {
-      // registration code here
-    };
-  </script>
 </html>
