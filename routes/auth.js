@@ -38,16 +38,13 @@ router.post("/login", async (req, res, next) => {
 
   if (!existingUser) {
     return res.status(404).json({ message: "User doesn't exist" });
-  }
-
-  if (!existingUser.comparePassword(password)) {
+  } else if (!existingUser.comparePassword(password)) {
     return res.status(400).json({ message: "Password is incorrect!" });
   }
-
-  req.session.user = existingUser;
-  return res
-    .status(200)
-    .json({ message: "Login Success", session: existingUser });
+  const user = existingUser.toJSON();
+  delete user.password;
+  req.session.user = user;
+  return res.status(200).json({ message: "Login Success", user });
 });
 
 module.exports = router;
