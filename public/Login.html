@@ -90,8 +90,11 @@
       try {
         const resp = await fetch("/auth/login", options)
         const body = resp.json()
+        if(body?.user){
+          window.href('/')
+        }
       } catch (error) {
-
+        alert(error.message)
       }
 
     document.getElementById("loginForm").addEventListener("submit", (e) => {
