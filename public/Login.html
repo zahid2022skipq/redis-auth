@@ -20,7 +20,7 @@
           <div class="relative mb-8">
             <input
               id="username"
-              name="email"
+              name="username"
               type="text"
               class="w-full h-10 text-gray-900 placeholder-transparent border-b-2 border-gray-300 peer focus:outline-none focus:border-purple-600"
               placeholder="john@doe.com"
@@ -76,8 +76,29 @@
     </div>
   </body>
   <script>
-    const onFormSubmit = async () => {
+    const onFormSubmit = async ({ username, password }) => {
       // form submit code here
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      };
+
+      fetch("http://localhost:3000/auth/login", options)
+        .then((response) => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.error(err));
     };
+
+    document.getElementById("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = form.elements["username"];
+      const password = form.elements["password"];
+
+      onFormSubmit({ username, password });
+    });
   </script>
 </html>
