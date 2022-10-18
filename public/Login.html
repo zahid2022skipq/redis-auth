@@ -91,7 +91,7 @@
         const resp = await fetch("/auth/login", options)
         const body = resp.json()
         if(body?.user){
-          window.href('/')
+          window.location.href('/')
         }
       } catch (error) {
         alert(error.message)
@@ -100,8 +100,8 @@
     document.getElementById("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const form = e.target;
-      const username = form.elements["username"];
-      const password = form.elements["password"];
+      const username = form.elements["username"].value;
+      const password = form.elements["password"].value;
 
       onFormSubmit({ username, password });
     });
